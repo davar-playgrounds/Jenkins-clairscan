@@ -13,7 +13,7 @@ pipeline {
 echo "starting scan services"
 
 $hostssh docker network create scanning 
-$hostssh docker run -p 5432:5432 -d --net=scanning --name db arminc/clair-db:$(date -d "yesterday" \'+%Y-%m-%d\')
+$hostssh docker run -p 5432:5432 -d --net=scanning --name db arminc/clair-db:latest
 echo "Snoozing for DB to start" && sleep 30
 $hostssh docker run -p 6060:6060 -d --net=scanning --link db:postgres --name clair arminc/clair-local-scan:v2.0.1
 
